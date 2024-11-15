@@ -22,16 +22,24 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required|min:6',
         ]);
-    
+
         if (Auth::attempt($request->only('email', 'password'))) {
-            return redirect()->intended('destinations')->with('success', 'You are logged in!');
+            $user = Auth::user();
+
+            // Redirect based on user role
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard')->with('success', 'Welcome, Admin!');
+            } elseif ($user->role === 'validator') {
+                return redirect()->route('validator.dashboard')->with('success', 'Welcome, Validator!');
+            } else {
+                return redirect()->route('home')->with('success', 'Welcome to Archeotrails!');
+            }
         }
-    
+
         return back()->withErrors([
             'email' => 'Invalid credentials. Please try again.',
         ])->withInput();
     }
-    
 
     // Handle logout logic
     public function logout()
@@ -42,31 +50,27 @@ class AuthController extends Controller
 
     // Display the registration form
     public function showRegisterForm()
-{
-    return view('register');
-}
+    {
+        return view('register');
+    }
 
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
 
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role ?? 'user', // Ensure role is set, default to 'user' if not provided
+        ]);
 
+        Auth::attempt($request->only('email', 'password'));
 
-
-
-public function register(Request $request)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users',
-        'password' => 'required|string|min:8|confirmed',
-    ]);
-
-    User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-    ]);
-
-    Auth::attempt($request->only('email', 'password'));
-
-    return redirect()->route('profile')->with('success', 'Registration successful! Welcome to Archeotrails.');
-}
+        return redirect()->route('home')->with('success', 'Registration successful! Welcome to Archeotrails.');
+    }
 }
