@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController; // Include this only once at the top
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PlaceController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -43,3 +44,8 @@ use App\Http\Controllers\DestinationController;
 
 Route::get('/', [DestinationController::class, 'showHomePage'])->name('home');
 Route::get('/destinations', [DestinationController::class, 'showDestinations'])->name('destinations');
+
+
+
+Route::get('/', [PlaceController::class, 'showHomePage'])->name('home');
+

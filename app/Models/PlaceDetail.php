@@ -9,6 +9,10 @@ class PlaceDetail extends Model
 {
     use HasFactory;
 
+    // Define fillable fields for mass assignment
+    protected $fillable = ['place_id', 'detail_name', 'detail_value'];
+
+    // Relationship to the Place model
     public function place()
     {
         return $this->belongsTo(Place::class);
