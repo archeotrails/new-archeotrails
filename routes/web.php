@@ -21,8 +21,6 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-
-
 // Routes for register
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
@@ -33,16 +31,15 @@ Route::get('/profile', function () {
 })->name('profile')->middleware('auth');
 
 
-
 Route::get('/', function () {
     return view('home');
 })->name('home');
+
 
 Route::get('/browse', function () {
     return view('browse');
 })->name('browse');
 
-// routes/web.php
 
 use App\Http\Controllers\DestinationController;
 
@@ -50,13 +47,11 @@ Route::get('/', [DestinationController::class, 'showHomePage'])->name('home');
 Route::get('/destinations', [DestinationController::class, 'showDestinations'])->name('destinations');
 
 
-
 Route::get('/', [PlaceController::class, 'showHomePage'])->name('home');
 
 
 Route::get('/places/create', [PlaceController::class, 'create'])->name('places.create');
 Route::post('/places', [PlaceController::class, 'store'])->name('places.store');
-
 
 
 Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');

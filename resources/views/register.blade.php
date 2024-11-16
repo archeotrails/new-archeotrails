@@ -22,6 +22,14 @@
                 <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm Password</label>
                 <input type="password" name="password_confirmation" id="password_confirmation" class="mt-1 p-2 w-full border border-gray-300 rounded" required>
             </div>
+            <div class="mb-4">
+                <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
+                <select name="role" id="role" class="mt-1 p-2 w-full border border-gray-300 rounded" required>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                    <option value="validator">Validator</option>
+                </select>
+            </div>
             <button type="submit" class="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700">Register</button>
         </form>
         <div class="text-center mt-4">

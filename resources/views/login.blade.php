@@ -21,7 +21,18 @@
                 @enderror
             </div>
             <div class="mb-4">
-                <button type="submit" class="w-full py-2 bg-green-600 text-white rounded hover:bg-light bg-green-900-700">Login</button>
+                <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
+                <select name="role" id="role" class="mt-1 p-2 w-full border border-gray-300 rounded" required>
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                    <option value="validator">Validator</option>
+                </select>
+                @error('role')
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="mb-4">
+                <button type="submit" class="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700">Login</button>
             </div>
         </form>
         <div class="text-center mt-4">
