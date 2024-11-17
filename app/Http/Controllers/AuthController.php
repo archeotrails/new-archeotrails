@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Admin;
+use App\Models\Validator; // Make sure this model exists and is imported
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,30 +19,27 @@ class AuthController extends Controller
 
     // Handle login logic
     public function login(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required|min:6',
-        'role' => 'required', // Assuming you have a dropdown or input to select role
-    ]);
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+            'role' => 'required|string|in:user,admin,validator', // Assuming role selection input exists
+        ]);
 
-    $credentials = $request->only('email', 'password');
+        $credentials = $request->only('email', 'password');
 
-    if ($request->role === 'admin' && Auth::guard('admin')->attempt($credentials)) {
-        return redirect()->route('admin.dashboard')->with('success', 'Welcome, Admin!');
-    } elseif ($request->role === 'validator' && Auth::guard('validator')->attempt($credentials)) {
-        return redirect()->route('validator.dashboard')->with('success', 'Welcome, Validator!');
-    } elseif ($request->role === 'user' && Auth::guard('web')->attempt($credentials)) {
-        return redirect()->route('home')->with('success', 'Welcome, User!');
+        if ($request->role === 'admin' && Auth::guard('admin')->attempt($credentials)) {
+            return redirect()->route('admin.dashboard')->with('success', 'Welcome, Admin!');
+        } elseif ($request->role === 'validator' && Auth::guard('validator')->attempt($credentials)) {
+            return redirect()->route('validator.dashboard')->with('success', 'Welcome, Validator!');
+        } elseif ($request->role === 'user' && Auth::guard('web')->attempt($credentials)) {
+            return redirect()->route('home')->with('success', 'Welcome, User!');
+        }
+
+        return back()->withErrors([
+            'email' => 'Invalid credentials or role. Please try again.',
+        ])->withInput();
     }
-
-    return back()->withErrors([
-        'email' => 'Invalid credentials or role. Please try again.',
-    ])->withInput();
-}
-
-
-    
 
     // Handle logout logic
     public function logout()
@@ -50,8 +49,6 @@ class AuthController extends Controller
     }
 
     // Display the registration form
-  
-
     public function showRegisterForm()
     {
         return view('register');
@@ -90,4 +87,3 @@ class AuthController extends Controller
         return redirect()->route('home')->with('success', 'Registration successful!');
     }
 }
-

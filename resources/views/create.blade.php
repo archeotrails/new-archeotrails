@@ -14,10 +14,6 @@
             <textarea name="description" class="w-full border rounded p-2" required></textarea>
         </div>
         <div class="mb-4">
-            <label class="block text-gray-700">Review</label>
-            <textarea name="review" class="w-full border rounded p-2" required></textarea>
-        </div>
-        <div class="mb-4">
             <label class="block text-gray-700">Category</label>
             <select name="category" class="w-full border rounded p-2" required>
                 <option value="Archeological">Archeological</option>
@@ -30,8 +26,34 @@
             <input type="text" name="location" class="w-full border rounded p-2" required>
         </div>
         <div class="mb-4">
-            <label class="block text-gray-700">Visited Date</label>
-            <input type="date" name="visited_date" class="w-full border rounded p-2" required>
+            <label class="block text-gray-700">District</label>
+            <select name="district" class="w-full border rounded p-2" required>
+                <option value="Ampara">Ampara</option>
+                <option value="Anuradhapura">Anuradhapura</option>
+                <option value="Badulla">Badulla</option>
+                <option value="Batticaloa">Batticaloa</option>
+                <option value="Colombo">Colombo</option>
+                <option value="Galle">Galle</option>
+                <option value="Gampaha">Gampaha</option>
+                <option value="Hambantota">Hambantota</option>
+                <option value="Jaffna">Jaffna</option>
+                <option value="Kalutara">Kalutara</option>
+                <option value="Kandy">Kandy</option>
+                <option value="Kegalle">Kegalle</option>
+                <option value="Kilinochchi">Kilinochchi</option>
+                <option value="Kurunegala">Kurunegala</option>
+                <option value="Mannar">Mannar</option>
+                <option value="Matale">Matale</option>
+                <option value="Matara">Matara</option>
+                <option value="Monaragala">Monaragala</option>
+                <option value="Mullaitivu">Mullaitivu</option>
+                <option value="Nuwara Eliya">Nuwara Eliya</option>
+                <option value="Polonnaruwa">Polonnaruwa</option>
+                <option value="Puttalam">Puttalam</option>
+                <option value="Ratnapura">Ratnapura</option>
+                <option value="Trincomalee">Trincomalee</option>
+                <option value="Vavuniya">Vavuniya</option>
+            </select>
         </div>
         <div class="mb-4">
             <label class="block text-gray-700">Photo</label>
