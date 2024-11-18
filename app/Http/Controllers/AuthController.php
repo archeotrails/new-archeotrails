@@ -19,27 +19,27 @@ class AuthController extends Controller
 
     // Handle login logic
     public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-            'role' => 'required|string|in:user,admin,validator', // Assuming role selection input exists
-        ]);
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|min:6',
+        'role' => 'required|string|in:user,admin,validator',
+    ]);
 
-        $credentials = $request->only('email', 'password');
+    $credentials = $request->only('email', 'password');
 
-        if ($request->role === 'admin' && Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->route('admin.dashboard')->with('success', 'Welcome, Admin!');
-        } elseif ($request->role === 'validator' && Auth::guard('validator')->attempt($credentials)) {
-            return redirect()->route('validator.dashboard')->with('success', 'Welcome, Validator!');
-        } elseif ($request->role === 'user' && Auth::guard('web')->attempt($credentials)) {
-            return redirect()->route('home')->with('success', 'Welcome, User!');
-        }
-
-        return back()->withErrors([
-            'email' => 'Invalid credentials or role. Please try again.',
-        ])->withInput();
+    if ($request->role === 'admin' && Auth::guard('admin')->attempt($credentials)) {
+        return redirect()->route('admin.dashboard')->with('success', 'Welcome, Admin!');
+    } elseif ($request->role === 'validator' && Auth::guard('validator')->attempt($credentials)) {
+        return redirect()->route('validator.dashboard')->with('success', 'Welcome, Validator!');
+    } elseif ($request->role === 'user' && Auth::guard('web')->attempt($credentials)) {
+        return redirect()->route('home')->with('success', 'Welcome, User!');
     }
+
+    return back()->withErrors([
+        'email' => 'Invalid credentials or role. Please try again.',
+    ])->withInput();
+}
 
     // Handle logout logic
     public function logout()
@@ -47,6 +47,34 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('/')->with('success', 'Logged out successfully.');
     }
+    // Handle admin/validator registration logic
+
+    public function adminRegister(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:admins|unique:validators',
+        'password' => 'required|string|min:8|confirmed',
+        'role' => 'required|string|in:admin,validator',
+    ]);
+
+    $data = [
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'role' => $request->role,
+    ];
+
+    // Create the user record based on the role
+    if ($request->role === 'admin') {
+        Admin::create($data);
+    } else {
+        Validator::create($data);
+    }
+
+    return redirect()->route('admin.dashboard')->with('success', 'Admin/Validator registered successfully!');
+}
+
 
     // Display the registration form
     public function showRegisterForm()

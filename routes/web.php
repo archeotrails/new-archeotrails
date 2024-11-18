@@ -1,61 +1,34 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController; // Include this only once at the top
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PlaceController;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ValidatorController;
-use App\Http\Controllers\DestinationController;
+use App\Http\Controllers\{AuthController, HomeController, PlaceController, AdminController, ValidatorController};
 
-
-
+// Main route for the homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Default route    
-Route::get('/', function () {
-    return view('welcome');
-});
-
-// Routes for login
+// Authentication routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-// Routes for register
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
+// Profile and other user views
+Route::get('/profile', fn() => view('profile'))->name('profile')->middleware('auth');
 
-Route::get('/profile', function () {
-    return view('profile');
-})->name('profile')->middleware('auth');
+// Place management routes
+Route::resource('places', PlaceController::class);
 
+// Validator dashboard routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/validator/dashboard', [ValidatorController::class, 'index'])->name('validator.dashboard');
+    Route::post('/validator/accept/{id}', [ValidatorController::class, 'accept'])->name('validator.accept');
+    Route::post('/validator/reject/{id}', [ValidatorController::class, 'reject'])->name('validator.reject');
+});
 
-Route::get('/', function () {
-    return view('home');
-})->name('home');
-
-
-Route::get('/browse', function () {
-    return view('browse');
-})->name('browse');
-
-
-
-Route::get('/', [DestinationController::class, 'showHomePage'])->name('home');
-Route::get('/destinations', [DestinationController::class, 'showDestinations'])->name('destinations');
-
-
-Route::get('/', [PlaceController::class, 'showHomePage'])->name('home');
-Route::get('/places/create', [PlaceController::class, 'create'])->name('places.create');
-Route::post('/places', [PlaceController::class, 'store'])->name('places.store');
-
-
-
+// Admin-specific routes (add middleware if necessary)
 Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
-Route::get('/validator/dashboard', [ValidatorController::class, 'index'])->name('validator.dashboard');
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-
-Route::resource('places', PlaceController::class);  
+Route::get('/admin/login', [AuthController::class, 'showAdminLoginForm'])->name('admin.login');
+Route::post('/admin/login', [AuthController::class, 'adminLogin']);
+Route::get('/admin/register', [AuthController::class, 'showAdminRegisterForm'])->name('admin.register');
+Route::post('/admin/register', [AuthController::class, 'adminRegister']);

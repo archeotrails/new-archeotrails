@@ -35,6 +35,7 @@ class PlaceController extends Controller
      */
     public function store(Request $request)
     {
+        if (auth()->check()) {
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
@@ -57,7 +58,7 @@ class PlaceController extends Controller
                 'district' => $request->district,
                 'photo' => $photoPath,
                 'suggested_by' => auth()->id(), // Make sure the user is authenticated
-                'status' => 'Pending', // Default status
+                'status' => 'pending', // Default status
             ]);
     
             return redirect()->route('home')->with('success', 'Place added successfully!');
@@ -65,10 +66,10 @@ class PlaceController extends Controller
             \Log::error('Error storing place: ' . $e->getMessage());
             return redirect()->back()->withErrors('An error occurred: ' . $e->getMessage());
         }
+    }else {
+        return redirect()->route('login')->withErrors('You must be logged in to submit a place.');
     }
     
 
 }
-
-
-    
+}

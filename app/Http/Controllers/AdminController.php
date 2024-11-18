@@ -1,8 +1,8 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
+use App\Models\Place; // Ensure Place model is imported
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -12,6 +12,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard'); // Make sure this view file exists in 'resources/views/admin/dashboard.blade.php'
+        // Fetch all places and pass them to the view
+        $places = Place::all(); // Retrieve all places
+        return view('admin.dashboard', compact('places'));
     }
 }
