@@ -11,8 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('places', function (Blueprint $table) {
-            $table->string('category')->nullable(); // Remove the 'after' clause
+        Schema::create('places', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->text('description');
+            $table->string('category');
+            $table->string('location');
+            $table->string('district');
+            $table->string('photo')->nullable();
+            $table->foreignId('suggested_by')->constrained('users');
+            $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('places', function (Blueprint $table) {
-            $table->dropColumn('category');
-        });
+        Schema::dropIfExists('places');
     }
 };

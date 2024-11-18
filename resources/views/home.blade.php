@@ -5,10 +5,12 @@
 <div class="relative w-full h-[500px] overflow-hidden">
     <div class="absolute inset-0">
         <div class="slideshow">
-            <div class="slide bg-cover bg-center h-full" style="background-image: url('{{ asset('public/images/slideshow1.jpg') }}');"></div>
+            <img class="slide bg-cover bg-center h-full" src="{{ asset('images/slideshow1.jpg') }}" alt="">
+            <div class="slide bg-cover bg-center h-full" style="background-image: url('{{ asset('images/slideshow1.jpg') }}');"></div>
             <div class="slide bg-cover bg-center h-full hidden" style="background-image: url('{{ asset('images/picture2.jpg') }}');"></div>
             <div class="slide bg-cover bg-center h-full hidden" style="background-image: url('{{ asset('images/picture3.jpg') }}');"></div>
         </div>
+        
     </div>
 
     <div class="absolute inset-0 flex flex-col justify-center items-center text-center text-white bg-black bg-opacity-50">
@@ -42,16 +44,16 @@
     @if($archeologicalPlaces->isEmpty())
         <p class="text-gray-500">No archeological places found.</p>
     @else
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            @foreach($archeologicalPlaces as $place)
-            <div class="bg-white p-4 rounded shadow">
-                <img src="{{ $place->image_url ?? asset('images/placeholder.jpg') }}" alt="{{ $place->name }}" class="rounded mb-2">
-                <h4 class="text-xl font-semibold">{{ $place->name }}</h4>
-                <p class="text-gray-600 truncate">{{ $place->description }}</p>
-                <a href="{{ route('places.show', $place->id) }}" class="text-blue-600 hover:underline">View Details</a>
-            </div>
-            @endforeach
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        @foreach($archeologicalPlaces as $place)
+        <div class="bg-white p-4 rounded shadow">
+            <img src="{{ asset('storage/' . $place->photo) }}" alt="{{ $place->name }}" class="rounded mb-2">
+            <h4 class="text-xl font-semibold">{{ $place->name }}</h4>
+            <p class="text-gray-600 truncate">{{ $place->description }}</p>
+            <a href="{{ route('places.show', $place->id) }}" class="text-blue-600 hover:underline">View Details</a>
         </div>
+        @endforeach
+    </div>
     @endif
 </section>
 
@@ -60,16 +62,16 @@
     @if($historicalPlaces->isEmpty())
         <p class="text-gray-500">No historical places found.</p>
     @else
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            @foreach($historicalPlaces as $place)
-            <div class="bg-white p-4 rounded shadow">
-                <img src="{{ $place->image_url ?? asset('images/placeholder.jpg') }}" alt="{{ $place->name }}" class="rounded mb-2">
-                <h4 class="text-xl font-semibold">{{ $place->name }}</h4>
-                <p class="text-gray-600 truncate">{{ $place->description }}</p>
-                <a href="{{ route('places.show', $place->id) }}" class="text-blue-600 hover:underline">View Details</a>
-            </div>
-            @endforeach
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        @foreach($historicalPlaces as $place)
+        <div class="bg-white p-4 rounded shadow">
+            <img src="{{ asset('storage/' . $place->photo) }}" alt="{{ $place->name }}" class="rounded mb-2">
+            <h4 class="text-xl font-semibold">{{ $place->name }}</h4>
+            <p class="text-gray-600 truncate">{{ $place->description }}</p>
+            <a href="{{ route('places.show', $place->id) }}" class="text-blue-600 hover:underline">View Details</a>
         </div>
+        @endforeach
+    </div>
     @endif
 </section>
 
@@ -81,14 +83,13 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             @foreach($urbanPlaces as $place)
             <div class="bg-white p-4 rounded shadow">
-                <img src="{{ $place->image_url ?? asset('images/placeholder.jpg') }}" alt="{{ $place->name }}" class="rounded mb-2">
+                <img src="{{ asset('storage/' . $place->photo) }}" alt="{{ $place->name }}" class="rounded mb-2">
                 <h4 class="text-xl font-semibold">{{ $place->name }}</h4>
                 <p class="text-gray-600 truncate">{{ $place->description }}</p>
                 <a href="{{ route('places.show', $place->id) }}" class="text-blue-600 hover:underline">View Details</a>
             </div>
             @endforeach
         </div>
-
         
 
     @endif

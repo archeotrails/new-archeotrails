@@ -40,24 +40,35 @@ class PlaceController extends Controller
             'description' => 'required|string',
             'category' => 'required|string',
             'location' => 'required|string',
-            'photo' => 'required|image|max:2048', // Validate image size
+            'district' => 'required|string',
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
+    
         try {
-            // Store the photo and save the new place record
+            // Store the uploaded photo and get the path
             $photoPath = $request->file('photo')->store('photos', 'public');
-
+    
+            // Create a new Place record
             Place::create([
                 'name' => $request->name,
                 'description' => $request->description,
                 'category' => $request->category,
                 'location' => $request->location,
-                'photo' => $photoPath, // Save the photo path
+                'district' => $request->district,
+                'photo' => $photoPath,
+                'suggested_by' => auth()->id(), // Make sure the user is authenticated
+                'status' => 'Pending', // Default status
             ]);
-
-            return redirect()->route('places.index')->with('success', 'Place added successfully!');
+    
+            return redirect()->route('home')->with('success', 'Place added successfully!');
         } catch (\Exception $e) {
+            \Log::error('Error storing place: ' . $e->getMessage());
             return redirect()->back()->withErrors('An error occurred: ' . $e->getMessage());
         }
     }
+    
+
 }
+
+
+    

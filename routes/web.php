@@ -6,12 +6,13 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ValidatorController;
+use App\Http\Controllers\DestinationController;
 
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// Default route
+// Default route    
 Route::get('/', function () {
     return view('welcome');
 });
@@ -41,19 +42,20 @@ Route::get('/browse', function () {
 })->name('browse');
 
 
-use App\Http\Controllers\DestinationController;
 
 Route::get('/', [DestinationController::class, 'showHomePage'])->name('home');
 Route::get('/destinations', [DestinationController::class, 'showDestinations'])->name('destinations');
 
 
 Route::get('/', [PlaceController::class, 'showHomePage'])->name('home');
-
-
 Route::get('/places/create', [PlaceController::class, 'create'])->name('places.create');
 Route::post('/places', [PlaceController::class, 'store'])->name('places.store');
+
 
 
 Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
 Route::get('/validator/dashboard', [ValidatorController::class, 'index'])->name('validator.dashboard');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+
+Route::resource('places', PlaceController::class);  

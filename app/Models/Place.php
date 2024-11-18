@@ -13,12 +13,12 @@ class Place extends Model
     protected $fillable = [
         'name',
         'description',
-        'category', // Category already existing in the table
-        'location', // URL or address of the place
+        'category',
+        'location',
         'district',
-        'photo', // Path for the uploaded photo
+        'photo',
         'suggested_by',
-        'status' // Accepted, Rejected, or Pending
+        'status'
     ];
 
     // Relationship to place details
