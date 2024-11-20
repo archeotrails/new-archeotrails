@@ -44,3 +44,7 @@ Route::post('/admin/validators', [AuthController::class, 'create'])->name('admin
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
 Route::get('/destinations', [DestinationController::class, 'showDestinations'])->name('destinations');
+
+
+
+Route::delete('/places/{place}', [PlaceController::class, 'destroy'])->name('places.destroy');

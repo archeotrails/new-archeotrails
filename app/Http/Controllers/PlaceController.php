@@ -72,4 +72,17 @@ class PlaceController extends Controller
     
 
 }
+
+public function destroy(Place $place)
+{
+    // Delete the photo from storage
+    if (Storage::disk('public')->exists($place->photo)) {
+        Storage::disk('public')->delete($place->photo);
+    }
+
+    // Delete the place record from the database
+    $place->delete();
+
+    return redirect()->route('admin.dashboard')->with('success', 'Place deleted successfully.');
+}
 }
