@@ -54,3 +54,5 @@ Route::delete('/places/{place}', [PlaceController::class, 'destroy'])->name('pla
 Route::get('/about', fn() => view('about'))->name('about');
 
 Route::get('/places/{place}', [PlaceController::class, 'show'])->name('places.show');
+
+Route::get('/places/{place}/edit', [PlaceController::class, 'edit'])->name('places.edit');

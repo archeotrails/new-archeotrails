@@ -45,8 +45,7 @@
                             <td class="px-4 py-2 border-b">{{ $place->category }}</td>
                             <td class="px-4 py-2 border-b">{{ $place->location }}</td>
                             <td class="px-4 py-2 border-b flex space-x-2">
-                                <a href="{{ route('places.edit', $place->id) }}" class="bg-yellow-400 text-white px-3 py-1 rounded-md hover:bg-yellow-500 transition">Edit</a>
-                                <form action="{{ route('places.destroy', $place->id) }}" method="POST" class="inline">
+                                <a href="{{ route('places.edit', $place->id) }}" class="bg-yellow-400 text-white px-3 py-1 rounded-md hover:bg-yellow-500 transition">Edit</a>                                <form action="{{ route('places.destroy', $place->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition">Delete</button>

@@ -90,5 +90,36 @@ public function show(Place $place)
     {
         return view('places.show', compact('place'));
     }
-    
+
+    public function edit(Place $place)
+{
+    return view('places.edit', compact('place'));
+}
+
+public function update(Request $request, Place $place)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'description' => 'required|string',
+        'category' => 'required|string',
+        'location' => 'required|string',
+        'district' => 'required|string',
+        'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    if ($request->hasFile('photo')) {
+        // Delete the old photo
+        if (Storage::disk('public')->exists($place->photo)) {
+            Storage::disk('public')->delete($place->photo);
+        }
+        // Store the new photo
+        $photoPath = $request->file('photo')->store('photos', 'public');
+        $place->photo = $photoPath;
+    }
+
+    $place->update($request->only('name', 'description', 'category', 'location', 'district'));
+
+    return redirect()->route('admin.dashboard')->with('success', 'Place updated successfully!');
+}
+
 }
