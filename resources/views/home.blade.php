@@ -80,18 +80,16 @@
     @if($urbanPlaces->isEmpty())
         <p class="text-gray-500">No urban places found.</p>
     @else
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            @foreach($urbanPlaces as $place)
-            <div class="bg-white p-4 rounded shadow">
-                <img src="{{ asset('storage/' . $place->photo) }}" alt="{{ $place->name }}" class="rounded mb-2">
-                <h4 class="text-xl font-semibold">{{ $place->name }}</h4>
-                <p class="text-gray-600 truncate">{{ $place->description }}</p>
-                <a href="{{ route('places.show', $place->id) }}" class="text-blue-600 hover:underline">View Details</a>
-            </div>
-            @endforeach
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        @foreach($urbanPlaces as $place)
+        <div class="bg-white p-4 rounded shadow">
+            <img src="{{ asset('storage/' . $place->photo) }}" alt="{{ $place->name }}" class="rounded mb-2">
+            <h4 class="text-xl font-semibold">{{ $place->name }}</h4>
+            <p class="text-gray-600 truncate">{{ $place->description }}</p>
+            <a href="{{ route('places.show', $place->id) }}" class="text-blue-600 hover:underline">View Details</a>
         </div>
-        
-
+        @endforeach
+    </div>
     @endif
 </section>
 

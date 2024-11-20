@@ -48,7 +48,10 @@
                     
                 @else
                 <div class="flex items-center space-x-2">
-                    <a href="{{ route('profile') }}" class="text-lg font-semibold text-gray-100 hover:text-blue-200">Profile</a>
+                    <a href="{{ route('profile') }}" class="text-lg font-semibold text-gray-100 hover:text-blue-200 flex items-center">
+                        <img src="{{ asset('images/user.png') }}" alt="Profile" class="w-8 h-8 rounded-full mr-2">
+                        
+                    </a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="text-gray-100 hover:text-red-400">Logout</button>

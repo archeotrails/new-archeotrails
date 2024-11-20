@@ -52,3 +52,5 @@ Route::middleware(['auth'])->group(function () {
 Route::delete('/places/{place}', [PlaceController::class, 'destroy'])->name('places.destroy');
 
 Route::get('/about', fn() => view('about'))->name('about');
+
+Route::get('/places/{place}', [PlaceController::class, 'show'])->name('places.show');

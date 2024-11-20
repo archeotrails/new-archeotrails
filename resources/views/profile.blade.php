@@ -5,5 +5,9 @@
     <h2 class="text-3xl font-bold mb-4">Welcome, {{ $user->name }}</h2>
     <p>Email: {{ $user->email }}</p>
     <p>Member since: {{ $user->created_at->format('M d, Y') }}</p>
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Logout</button>
+    </form>
 </div>
 @endsection

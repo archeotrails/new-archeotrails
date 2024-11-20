@@ -85,4 +85,10 @@ public function destroy(Place $place)
 
     return redirect()->route('admin.dashboard')->with('success', 'Place deleted successfully.');
 }
+
+public function show(Place $place)
+    {
+        return view('places.show', compact('place'));
+    }
+    
 }
