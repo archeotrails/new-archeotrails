@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{AuthController, HomeController, PlaceController, AdminController, ValidatorController, DashboardController, DestinationController};
+use App\Http\Controllers\{AuthController, HomeController, PlaceController, AdminController, ValidatorController, DashboardController, DestinationController, ProfileController};
 
 // Main route for the homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -45,6 +45,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 Route::get('/destinations', [DestinationController::class, 'showDestinations'])->name('destinations');
 
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+});
 
 Route::delete('/places/{place}', [PlaceController::class, 'destroy'])->name('places.destroy');
+
+Route::get('/about', fn() => view('about'))->name('about');

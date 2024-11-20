@@ -59,7 +59,7 @@
             <label class="block text-gray-700">Photo</label>
             <input type="file" name="photo" class="w-full border p-2" required>
         </div>
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Submit</button>
+        <button type="submit" class="bg-orange-900 text-white px-4 py-2 rounded">Submit</button>
     </form>
 </div>
 @endsection

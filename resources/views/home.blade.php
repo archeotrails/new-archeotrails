@@ -95,7 +95,7 @@
     @endif
 </section>
 
-        <a href="{{ route('places.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block">Add Place</a>
+        <a href="{{ route('places.create') }}" class="bg-green-500 text-white px-4 py-2 rounded mt-4 inline-block">Add Place</a>
 
 
         

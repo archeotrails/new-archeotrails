@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('category');
             $table->string('location');
             $table->string('district');
-            $table->string('photo')->nullable();
+            $table->string('photo')->after('district');
             $table->foreignId('suggested_by')->constrained('users');
             $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
             $table->timestamps();
@@ -31,5 +31,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('places');
+        Schema::table('places', function (Blueprint $table) {
+            $table->dropColumn('photo');
+        });
     }
 };

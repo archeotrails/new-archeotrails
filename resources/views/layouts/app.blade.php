@@ -28,7 +28,7 @@
                 @guest
                     <div class="dropdown inline-block relative">
                         <button class="text-lg font-semibold text-gray-100 hover:text-blue-200 flex items-center mr-10">
-                            <img src="public/images/user.png" alt="Profile" class="w-8 h-8 rounded-full">
+                            <img src="{{ asset('images/user.png') }}" alt="Profile" class="w-8 h-8 rounded-full">
                         </button>
                         <div class="dropdown-menu absolute hidden bg-white shadow-lg rounded w-48 mt-2">
                             <a href="{{ route('login') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">Login</a>
@@ -47,15 +47,14 @@
                     </script>
                     
                 @else
-                    <div class="flex items-center space-x-2">
-                     
-                        <img src="/path/to/profile-icon.png" alt="Profile" class="w-8 h-8 rounded-full">
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="text-gray-100 hover:text-red-400">Logout</button>
-                        </form>
-                    </div>
-                @endguest
+                <div class="flex items-center space-x-2">
+                    <a href="{{ route('profile') }}" class="text-lg font-semibold text-gray-100 hover:text-blue-200">Profile</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="text-gray-100 hover:text-red-400">Logout</button>
+                    </form>
+                </div>
+            @endguest
             </div>
         </div>
     </header>
