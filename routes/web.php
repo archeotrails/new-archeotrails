@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{AuthController, HomeController, PlaceController, AdminController, ValidatorController};
+use App\Http\Controllers\{AuthController, HomeController, PlaceController, AdminController, ValidatorController, DashboardController, DestinationController};
 
 // Main route for the homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -24,6 +24,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/validator/dashboard', [ValidatorController::class, 'index'])->name('validator.dashboard');
     Route::post('/validator/accept/{id}', [ValidatorController::class, 'accept'])->name('validator.accept');
     Route::post('/validator/reject/{id}', [ValidatorController::class, 'reject'])->name('validator.reject');
+
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::delete('/admin/user/{id}', [AdminController::class, 'deleteUser'])->name('admin.deleteUser');
+    Route::delete('/admin/admin/{id}', [AdminController::class, 'deleteAdmin'])->name('admin.deleteAdmin');
+    Route::delete('/admin/validator/{id}', [AdminController::class, 'deleteValidator'])->name('admin.deleteValidator');
 });
 
 // Admin-specific routes (add middleware if necessary)
@@ -32,3 +37,10 @@ Route::get('/admin/login', [AuthController::class, 'showAdminLoginForm'])->name(
 Route::post('/admin/login', [AuthController::class, 'adminLogin']);
 Route::get('/admin/register', [AuthController::class, 'showAdminRegisterForm'])->name('admin.register');
 Route::post('/admin/register', [AuthController::class, 'adminRegister']);
+
+Route::post('/admin/validators', [AuthController::class, 'create'])->name('admin.usercreate');
+
+// Dashboard route
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
+
+Route::get('/destinations', [DestinationController::class, 'showDestinations'])->name('destinations');

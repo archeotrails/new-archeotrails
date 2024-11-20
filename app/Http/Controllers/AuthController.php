@@ -28,13 +28,20 @@ class AuthController extends Controller
 
     $credentials = $request->only('email', 'password');
 
-    if ($request->role === 'admin' && Auth::guard('admin')->attempt($credentials)) {
-        return redirect()->route('admin.dashboard')->with('success', 'Welcome, Admin!');
-    } elseif ($request->role === 'validator' && Auth::guard('validator')->attempt($credentials)) {
-        return redirect()->route('validator.dashboard')->with('success', 'Welcome, Validator!');
-    } elseif ($request->role === 'user' && Auth::guard('web')->attempt($credentials)) {
-        return redirect()->route('home')->with('success', 'Welcome, User!');
-    }
+    $credentials = $request->only('email', 'password', 'role');
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard');
+            } elseif ($user->role === 'validator') {
+                return redirect()->route('validator.dashboard');
+            } else {
+                return redirect()->route('home');
+            }
+        }
+
 
     return back()->withErrors([
         'email' => 'Invalid credentials or role. Please try again.',
@@ -82,6 +89,7 @@ class AuthController extends Controller
         return view('register');
     }
 
+
     // Handle registration logic
     public function register(Request $request)
     {
@@ -100,11 +108,13 @@ class AuthController extends Controller
 
         switch ($request->role) {
             case 'admin':
-                Admin::create($data);
+                // Admin::create($data);
+                User::create($data);
                 Auth::guard('admin')->attempt($request->only('email', 'password'));
                 break;
             case 'validator':
-                Validator::create($data);
+                // Validator::create($data);
+                User::create($data);
                 Auth::guard('validator')->attempt($request->only('email', 'password'));
                 break;
             default:
@@ -114,4 +124,28 @@ class AuthController extends Controller
 
         return redirect()->route('home')->with('success', 'Registration successful!');
     }
+
+    
+    // Register users //////////////////////////////////////////////
+    public function create(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'role' => 'required|string|in:user,admin,validator',
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+        ]);
+
+        return redirect()->route('home')->with('success', 'User created successfully!');
+        
+    }
 }
+
+

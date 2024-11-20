@@ -21,8 +21,7 @@
                     <a href="/" class="text-lg font-semibold text-gray-100 hover:text-blue-200">Home</a>
                     <a href="/destinations" class="text-lg font-semibold text-gray-100 hover:text-blue-200">Destinations</a>
                     <a href="/about" class="text-lg font-semibold text-gray-100 hover:text-blue-200">About</a>
-                    <a href="/contact" class="text-lg font-semibold text-gray-100 hover:text-blue-200">Contact</a>
-                </div>
+                    <a href="{{ route('places.create') }}" class="text-lg font-semibold text-gray-100 hover:text-blue-200">Add Place</a>                </div>
             </nav>
             <!-- User Section -->
             <div class="relative">

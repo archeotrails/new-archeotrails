@@ -5,11 +5,11 @@
 <div class="relative w-full h-[500px] overflow-hidden">
     <div class="absolute inset-0">
         <div class="slideshow">
-            <img class="slide bg-cover bg-center h-full" src="{{ asset('images/slideshow1.jpg') }}" alt="">
-            <div class="slide bg-cover bg-center h-full" style="background-image: url('{{ asset('images/slideshow1.jpg') }}');"></div>
-            <div class="slide bg-cover bg-center h-full hidden" style="background-image: url('{{ asset('images/picture2.jpg') }}');"></div>
-            <div class="slide bg-cover bg-center h-full hidden" style="background-image: url('{{ asset('images/picture3.jpg') }}');"></div>
+            <img class="slide h-full w-full object-cover" src="{{ asset('images/slideshow3.jpg') }}" alt="">
+            <img class="slide h-full w-full object-cover" src="{{ asset('images/slideshow2.webp') }}" alt="">
+            <img class="slide h-full w-full object-cover" src="{{ asset('images/slideshow4.jpg') }}" alt="">
         </div>
+        
         
     </div>
 
@@ -97,5 +97,7 @@
 
         <a href="{{ route('places.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block">Add Place</a>
 
+
+        
 
 @endsection

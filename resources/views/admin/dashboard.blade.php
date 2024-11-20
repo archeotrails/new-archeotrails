@@ -72,7 +72,7 @@
 <div class="flex justify-center items-center min-h-screen bg-gray-50 py-12">
     <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
         <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">Admin/Validator Register</h2>
-        <form method="POST" action="{{ route('admin.register') }}">
+        <form method="POST" action="{{ route('admin.usercreate') }}">
             @csrf
             <div class="mb-4">
                 <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
@@ -118,4 +118,116 @@
         </form>
     </div>
 </div>
+
+<div class="mt-6">
+    <h2 class="text-2xl font-semibold text-gray-700 mb-4">Manage Users</h2>
+    @if($users->count() > 0)
+        <table class="table-auto w-full border border-gray-300 shadow-md rounded-lg overflow-hidden">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="px-4 py-2 border-b border-gray-300">ID</th>
+                    <th class="px-4 py-2 border-b border-gray-300">Name</th>
+                    <th class="px-4 py-2 border-b border-gray-300">Email</th>
+                    <th class="px-4 py-2 border-b border-gray-300">Role</th>
+                    <th class="px-4 py-2 border-b border-gray-300">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                @foreach($users as $user)
+                    <tr class="hover:bg-gray-100 transition">
+                        <td class="px-4 py-2 border-b">{{ $user->id }}</td>
+                        <td class="px-4 py-2 border-b">{{ $user->name }}</td>
+                        <td class="px-4 py-2 border-b">{{ $user->email }}</td>
+                        <td class="px-4 py-2 border-b">{{ $user->role }}</td>
+                        <td class="px-4 py-2 border-b flex space-x-2">
+                            <form action="{{ route('admin.deleteUser', $user->id) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        <p class="mt-4 text-gray-600">No users available to manage.</p>
+    @endif
+</div>
+
+<!-- Display a table to list admins -->
+<div class="mt-6">
+    <h2 class="text-2xl font-semibold text-gray-700 mb-4">Manage Admins</h2>
+    @if($admins->count() > 0)
+        <table class="table-auto w-full border border-gray-300 shadow-md rounded-lg overflow-hidden">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="px-4 py-2 border-b border-gray-300">ID</th>
+                    <th class="px-4 py-2 border-b border-gray-300">Name</th>
+                    <th class="px-4 py-2 border-b border-gray-300">Email</th>
+                    <th class="px-4 py-2 border-b border-gray-300">Role</th>
+                    <th class="px-4 py-2 border-b border-gray-300">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                @foreach($admins as $admin)
+                    <tr class="hover:bg-gray-100 transition">
+                        <td class="px-4 py-2 border-b">{{ $admin->id }}</td>
+                        <td class="px-4 py-2 border-b">{{ $admin->name }}</td>
+                        <td class="px-4 py-2 border-b">{{ $admin->email }}</td>
+                        <td class="px-4 py-2 border-b">{{ $admin->role }}</td>
+                        <td class="px-4 py-2 border-b flex space-x-2">
+                            <form action="{{ route('admin.deleteAdmin', $admin->id) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        <p class="mt-4 text-gray-600">No admins available to manage.</p>
+    @endif
+</div>
+
+<!-- Display a table to list validators -->
+<div class="mt-6">
+    <h2 class="text-2xl font-semibold text-gray-700 mb-4">Manage Validators</h2>
+    @if($validators->count() > 0)
+        <table class="table-auto w-full border border-gray-300 shadow-md rounded-lg overflow-hidden">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="px-4 py-2 border-b border-gray-300">ID</th>
+                    <th class="px-4 py-2 border-b border-gray-300">Name</th>
+                    <th class="px-4 py-2 border-b border-gray-300">Email</th>
+                    <th class="px-4 py-2 border-b border-gray-300">Role</th>
+                    <th class="px-4 py-2 border-b border-gray-300">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                @foreach($validators as $validator)
+                    <tr class="hover:bg-gray-100 transition">
+                        <td class="px-4 py-2 border-b">{{ $validator->id }}</td>
+                        <td class="px-4 py-2 border-b">{{ $validator->name }}</td>
+                        <td class="px-4 py-2 border-b">{{ $validator->email }}</td>
+                        <td class="px-4 py-2 border-b">{{ $validator->role }}</td>
+                        <td class="px-4 py-2 border-b flex space-x-2">
+                            <form action="{{ route('admin.deleteValidator', $validator->id) }}" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        <p class="mt-4 text-gray-600">No validators available to manage.</p>
+    @endif
+</div>
+</div>
+
 @endsection
