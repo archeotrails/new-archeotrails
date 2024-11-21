@@ -60,13 +60,13 @@ class PlaceController extends Controller
                 'suggested_by' => auth()->id(), // Make sure the user is authenticated
                 'status' => 'pending', // Default status
             ]);
-    
-            return redirect()->route('home')->with('success', 'Place added successfully!');
+
+            return redirect()->route('places.create')->with('success', 'The place has been sent to the validation process.');
         } catch (\Exception $e) {
             \Log::error('Error storing place: ' . $e->getMessage());
             return redirect()->back()->withErrors('An error occurred: ' . $e->getMessage());
         }
-    }else {
+    } else {
         return redirect()->route('login')->withErrors('You must be logged in to submit a place.');
     }
     

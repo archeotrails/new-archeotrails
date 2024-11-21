@@ -3,6 +3,13 @@
 @section('content')
 <div class="max-w-lg mx-auto my-10">
     <h2 class="text-2xl font-bold mb-4">Add a New Place</h2>
+
+    @if(session('success'))
+        <div class="alert alert-success bg-green-100 text-green-700 p-4 rounded-md mb-4">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <form action="{{ route('places.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-4">
