@@ -4,6 +4,7 @@
     "scripts": {
         "build": "vite build",
         "dev": "vite"
+
     },
     "devDependencies": {
         "autoprefixer": "^10.4.20",
@@ -11,7 +12,14 @@
         "concurrently": "^9.0.1",
         "laravel-vite-plugin": "^1.0",
         "postcss": "^8.4.47",
+        "sass": "^1.82.0",
+        "sass-loader": "^16.0.3",
         "tailwindcss": "^3.4.13",
         "vite": "^5.0"
+    },
+    "dependencies": {
+        "@popperjs/core": "^2.11.8",
+        "bootstrap": "^5.3.3",
+        "swiper": "^11.1.15"
     }
 }

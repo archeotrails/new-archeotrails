@@ -60,6 +60,33 @@
         @endif
     </div>
 
+    <!--review list-->
+    {{-- <div class="mt-6">
+        <h3 class="text-2xl font-bold mb-2">Reviews</h3>
+        @if($reviews->isEmpty())
+            <p class="text-gray-700">No reviews available.</p>
+        @else
+            @foreach($reviews as $review)
+                <div class="mt-4 p-4 border rounded bg-gray-50">
+                    <p class="text-lg font-semibold">{{ $review->user->name }}</p>
+                    <p class="text-gray-700">{{ $review->content }}</p>
+                    <p class="text-sm text-gray-500">{{ $review->created_at->format('F j, Y, g:i a') }}</p>
+    
+                    <!-- Delete Button -->
+                    <form action="{{ route('reviews.destroy', $review->id) }}" method="POST" class="mt-2">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                            Delete
+                        </button>
+                    </form>
+                </div>
+            @endforeach
+        @endif
+    </div> --}}
+    
+
+
     <!-- Admin and Validator Registration Form -->
     <div class="mt-8">
         <h2 class="text-3xl font-semibold text-gray-800 mb-4">Admin/Validator Registration</h2>

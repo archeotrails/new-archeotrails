@@ -27,6 +27,14 @@
             <input type="text" name="location" class="w-full border rounded p-2" value="{{ $place->location }}" required>
         </div>
         <div class="mb-4">
+            <label class="block text-gray-700">Latitude</label>
+            <input type="number" name="latitude" class="w-full border rounded p-2" value="{{ $place->latitude }}" required>
+        </div>
+        <div class="mb-4">
+            <label class="block text-gray-700">Longitude</label>
+            <input type="number" name="longitude" class="w-full border rounded p-2" value="{{ $place->longitude }}" required>
+        </div>
+        <div class="mb-4">
             <label class="block text-gray-700">District</label>
             <select name="district" class="w-full border rounded p-2" required>
                 <option value="Ampara" {{ $place->district == 'Ampara' ? 'selected' : '' }}>Ampara</option>
@@ -38,6 +46,7 @@
             <label class="block text-gray-700">Photo</label>
             <input type="file" name="photo" class="w-full border p-2">
         </div>
+
         <button type="submit" class="bg-orange-900 text-white px-4 py-2 rounded">Update</button>
     </form>
 </div>

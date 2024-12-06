@@ -15,6 +15,8 @@ class Place extends Model
         'description',
         'category',
         'location',
+        'longitude',
+        'latitude',
         'district',
         'photo',
         'suggested_by',
@@ -37,5 +39,9 @@ class Place extends Model
     public function scopeCategorized($query, $category)
     {
         return $query->where('category', $category);
+    }
+
+    public function reviews(){
+        return $this->hasMany(Review::class);
     }
 }

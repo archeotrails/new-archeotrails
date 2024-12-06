@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{AuthController, HomeController, PlaceController, AdminController, ValidatorController, DashboardController, DestinationController, ProfileController};
+use App\Http\Controllers\{AuthController, HomeController, PlaceController, AdminController, ValidatorController, DashboardController, DestinationController, ProfileController, ReviewController};
 
 // Main route for the homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -56,3 +56,13 @@ Route::get('/about', fn() => view('about'))->name('about');
 Route::get('/places/{place}', [PlaceController::class, 'show'])->name('places.show');
 
 Route::get('/places/{place}/edit', [PlaceController::class, 'edit'])->name('places.edit');
+
+//reviews
+Route::middleware(['auth'])->group(function() {
+    Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+});
+Route::delete('/reviews/{id}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+
+Route::get('/places/{id}', [PlaceController::class, 'showReviews'])->name('places.show');
+
+Route::get('/places/{id}/reviews', [PlaceController::class, 'showReviews'])->name('places.reviews');
