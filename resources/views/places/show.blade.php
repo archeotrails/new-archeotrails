@@ -41,7 +41,7 @@
     @auth
     <div class="mt-4 p-3 rounded shadow-md">
         @if(session('success'))
-            <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+            <div id="success-message" class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
                 {{ session('success') }}
             </div>
         @endif
@@ -109,17 +109,20 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const successMessage = document.querySelector('.bg-green-100');
+    const successMessage = document.querySelector('"success-message');
     if (successMessage) {
-        setTimeout(function() {
+        const timeoutId = setTimeout(function() {
             successMessage.style.transition = 'opacity 0.5s ease';
             successMessage.style.opacity = '0';
-            setTimeout(function() {
+            clearTimeout(timeoutId);
+
+            successMessage.addEventListener('transitionend', function() {
                 successMessage.remove();
-            }, 500);
+            });
         }, 3000);
     }
 });
+
 document.getElementById('reviewForm').addEventListener('submit', function(e){
     const content = document.getElementById('reviewContent').value;
     const validationMessage = document.getElementById('validationMessage');

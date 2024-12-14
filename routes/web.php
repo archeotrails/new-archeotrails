@@ -16,6 +16,10 @@ Route::post('/register', [AuthController::class, 'register']);
 // Profile and other user views
 Route::get('/profile', fn() => view('profile'))->name('profile')->middleware('auth');
 
+Route::get('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
+
+
 // Place management routes
 Route::resource('places', PlaceController::class);
 
