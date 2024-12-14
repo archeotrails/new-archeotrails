@@ -135,4 +135,6 @@ public function showReviews($id)
         return view('places.reviews', compact('place', 'reviews'));
     }
 
+
+
 }

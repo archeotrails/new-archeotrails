@@ -61,8 +61,10 @@ Route::get('/places/{place}/edit', [PlaceController::class, 'edit'])->name('plac
 Route::middleware(['auth'])->group(function() {
     Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 });
-Route::delete('/reviews/{id}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
 
 Route::get('/places/{id}', [PlaceController::class, 'showReviews'])->name('places.show');
 
 Route::get('/places/{id}/reviews', [PlaceController::class, 'showReviews'])->name('places.reviews');
+
+//map
+
