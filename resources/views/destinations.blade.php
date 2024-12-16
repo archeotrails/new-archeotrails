@@ -29,11 +29,8 @@
         Plan Your Trip
     </button>
 </div>
-
-<!-- Search Fields -->
-<div class="flex justify-center space-x-4 mb-8">
-    <input type="text" placeholder="Enter your starting location" class="p-3 border rounded-lg w-64">
-    <input type="text" placeholder="Find and select your destination" class="p-3 border rounded-lg w-64">
+<div>
+    @livewire('google-map')
 </div>
 
 @endsection

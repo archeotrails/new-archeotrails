@@ -55,7 +55,7 @@
                 rows="3"
                 class="w-full p-2 border rounded text-sm"
                 placeholder="Share your experience..."
-                required>{{old('content')}}</textarea>
+                >{{old('content')}}</textarea>
 
             @error('content')
                 <p class="text-red-500 text-sm">{{$message}}</p>
@@ -129,7 +129,7 @@ document.getElementById('reviewForm').addEventListener('submit', function(e){
 
     validationMessage.classList.add('hidden');
 
-    if (!content.trim()){
+    if (!content){
         e.preventDefault();
         validationMessage.textContent = 'Review cannot be empty';
         validationMessage.classList.remove('hidden');

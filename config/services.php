@@ -34,5 +34,7 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    'googleMap' => [
+        'apiKey' => env('GOOGLE_MAP_API_KEY'),
+    ]
 ];
