@@ -10,7 +10,7 @@
             <img class="slide h-full w-full object-cover" src="{{ asset('images/destination1.jpg') }}" alt="">
             <img class="slide h-full w-full object-cover" src="{{ asset('images/destination3.webp') }}" alt="">
         </div>
-        
+
     </div>
 
     <div class="absolute inset-0 flex flex-col justify-center items-center text-center text-white bg-black bg-opacity-50">

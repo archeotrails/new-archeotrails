@@ -71,4 +71,7 @@ Route::get('/places/{id}', [PlaceController::class, 'showReviews'])->name('place
 Route::get('/places/{id}/reviews', [PlaceController::class, 'showReviews'])->name('places.reviews');
 
 //map
+Route::get('/locations', function () {
+    return view('locations');
+});
 
