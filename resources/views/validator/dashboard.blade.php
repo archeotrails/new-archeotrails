@@ -20,6 +20,8 @@
                     <th class="px-4 py-2 border-b border-gray-300">Description</th>
                     <th class="px-4 py-2 border-b border-gray-300">Category</th>
                     <th class="px-4 py-2 border-b border-gray-300">District</th>
+                    <th class="px-4 py-2 border-b border-gray-300">Longitude</th>
+                    <th class="px-4 py-2 border-b border-gray-300">Latitude</th>
                     <th class="px-4 py-2 border-b border-gray-300">Actions</th>
                 </tr>
             </thead>
@@ -30,8 +32,12 @@
                         <td class="px-4 py-2 border-b">{{ $place->description }}</td>
                         <td class="px-4 py-2 border-b">{{ $place->category }}</td>
                         <td class="px-4 py-2 border-b">{{ $place->district }}</td>
+                        <td class="px-4 py-2 border-b">{{ $place->longitude }}</td>
+                        <td class="px-4 py-2 border-b">{{ $place->latitude }}</td>
                         <td class="px-4 py-2 border-b flex space-x-2">
                             <form action="{{ route('validator.accept', $place->id) }}" method="POST" class="inline">
+                            <a href="{{ route('places.edit', $place->id) }}" class="bg-yellow-400 text-white px-3 py-1 rounded-md hover:bg-yellow-500 transition">Edit</a>                                <form action="{{ route('places.destroy', $place->id) }}" method="POST" class="inline">
+
                                 @csrf
                                 @method('POST')
                                 <button type="submit" class="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600 transition">Accept</button>

@@ -21,5 +21,7 @@ class DestinationController extends Controller
         // Pass data related to specific destinations if needed
         return view('destinations'); // Create a 'destinations.blade.php' view in the 'resources/views' directory.
     }
+
+     
 }
 

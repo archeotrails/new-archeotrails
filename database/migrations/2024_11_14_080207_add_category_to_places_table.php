@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('category');
             $table->string('location');
             $table->string('district');
-            $table->string('photo')->after('district');
+            $table->string('photo')-> nullable();
             $table->foreignId('suggested_by')->constrained('users');
             $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
             $table->timestamps();

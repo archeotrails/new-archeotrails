@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Place;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -41,6 +42,8 @@ class PlaceController extends Controller
             'description' => 'required|string',
             'category' => 'required|string',
             'location' => 'required|string',
+            'longitude' => 'required|string',
+            'latitude' => 'required|string',
             'district' => 'required|string',
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -55,6 +58,8 @@ class PlaceController extends Controller
                 'description' => $request->description,
                 'category' => $request->category,
                 'location' => $request->location,
+                'longitude' => $request->longitude,
+                'latitude' => $request->latitude,
                 'district' => $request->district,
                 'photo' => $photoPath,
                 'suggested_by' => auth()->id(), // Make sure the user is authenticated
@@ -103,6 +108,8 @@ public function update(Request $request, Place $place)
         'description' => 'required|string',
         'category' => 'required|string',
         'location' => 'required|string',
+        'longitude' => 'required|string',
+        'latitude' => 'required|string',
         'district' => 'required|string',
         'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
@@ -117,9 +124,17 @@ public function update(Request $request, Place $place)
         $place->photo = $photoPath;
     }
 
-    $place->update($request->only('name', 'description', 'category', 'location', 'district'));
+    $place->update($request->only('name', 'description', 'category', 'location', 'longitude', 'latitude', 'district'));
 
     return redirect()->route('admin.dashboard')->with('success', 'Place updated successfully!');
 }
+public function showReviews($id)  
+    {
+        $place = Place::findOrFail($id);
+        $reviews = Review::where('place_id', $id)->get();
+        return view('places.reviews', compact('place', 'reviews'));
+    }
+
+
 
 }
