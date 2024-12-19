@@ -2,12 +2,9 @@
 
 @section('content')
 <div class="container mx-auto mt-6 p-4 bg-white shadow rounded">
-    <!-- Place Header -->
     <h2 class="text-2xl font-bold mb-4 text-gray-800">{{ $place->name }}</h2>
     
-    <!-- Image and Content Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-        <!-- Image on the left -->
         <div>
             <img src="{{ asset('storage/' . $place->photo) }}" 
                  alt="{{ $place->name }}" 
@@ -17,11 +14,8 @@
             <p class="text-sm text-gray-700">{{ $place->description }}</p>
         </div>
         
-        <!-- Content on the right -->
         <div class="space-y-3">
-            <!-- Description Card -->
-            
-            
+                        
             <!-- Details -->
             <div class="grid grid-cols-2 gap-2 text-sm">
                 <div class="p-2 bg-gray-50 rounded">
@@ -41,7 +35,7 @@
     @auth
     <div class="mt-4 p-3 rounded shadow-md">
         @if(session('success'))
-            <div id="success-message" class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+            <div id="reviewSuccessMessage" class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
                 {{ session('success') }}
             </div>
         @endif
@@ -65,6 +59,7 @@
             <p id="validationMessage" class="text-red-500 text-sm hidden"></p>
 
             <button
+            id="submitReview"
                 type="submit"
                 class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm">
                 Submit Review
@@ -109,7 +104,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const successMessage = document.querySelector('"success-message');
+    const successMessage = document.querySelector('reviewSuccessMessagee');
     if (successMessage) {
         const timeoutId = setTimeout(function() {
             successMessage.style.transition = 'opacity 0.5s ease';
@@ -144,8 +139,9 @@ document.getElementById('reviewForm').addEventListener('submit', function(e){
     const badWords = ['fuck', 'shit', 'damn'];
     if (badWords.some(word => content.toLowerCase().includes(word))) {
         e.preventDefault();
-        validationMessage.textContent = 'Review contains inappropiate language. please revise your review';
+        validationMessage.textContent = 'Review contains inappropriate language. Please revise your review.';
         validationMessage.classList.remove('hidden');
+        document.getElementById('reviewContent').value = ''; // Clear the textarea
         return;
     }
 });

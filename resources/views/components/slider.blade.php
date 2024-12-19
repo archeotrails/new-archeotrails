@@ -11,7 +11,7 @@
                                 class="rounded mb-2">
                             <h4 class="text-xl font-semibold">{{ $place->name }}</h4>
                             <p class="text-gray-600 truncate">{{ $place->description }}</p>
-                            <a href="{{ route('places.show', $place->id) }}" class="text-blue-600 hover:underline">View
+                            <a href="{{ route('places.show', $place->id) }}" class="text-blue-600 hover:underline" id="viewdetails">View
                                 Details</a>
                         </div>
                     @endforeach

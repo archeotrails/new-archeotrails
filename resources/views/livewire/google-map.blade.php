@@ -4,7 +4,8 @@
             class="p-3 border rounded-lg w-64">
         <input id="endLocation" type="text" placeholder="Find and select your destination"
             class="p-3 border rounded-lg w-64">
-        <button onclick="getDirection()" class="p-3 bg-blue-500 text-white rounded-lg">Get Directions</button>
+        <button onclick="getDirection()" id="directionbutton" class="p-3 bg-blue-500 text-white rounded-lg">Get
+            Directions</button>
     </div>
 
     <!-- Message Display Area -->
@@ -13,10 +14,8 @@
     <div class="flex items-start h-screen gap-8">
         <div id="googleMap" class="w-full h-full"></div>
 
-        <div class="w-full h-full">
-            <h2>Additional Content</h2>
-            <p>This is the space for additional content, such as descriptions, user inputs, or any other relevant
-                information.</p>
+        <div class="w-full overflow-y-auto h-full">
+            <h2>Places You Can Visit!</h2>
             <div>
                 <ul id="places-list"></ul>
             </div>
@@ -30,6 +29,7 @@
     let startAutocomplete;
     let endAutocomplete;
     let map;
+
     const placesList = document.getElementById("places-list");
     const loginMessage = document.getElementById("loginMessage");
 
@@ -48,8 +48,16 @@
         directionsRenderer = new google.maps.DirectionsRenderer();
         directionsRenderer.setMap(map);
 
-        startAutocomplete = new google.maps.places.Autocomplete(document.getElementById("startLocation"));
-        endAutocomplete = new google.maps.places.Autocomplete(document.getElementById("endLocation"));
+        startAutocomplete = new google.maps.places.Autocomplete(document.getElementById("startLocation"), {
+            componentRestrictions: {
+                country: "LK"
+            }
+        });
+        endAutocomplete = new google.maps.places.Autocomplete(document.getElementById("endLocation"), {
+            componentRestrictions: {
+                country: "LK"
+            }
+        });
     }
 
     function getDirection() {
@@ -109,8 +117,15 @@
     function findLocationsWithinRadius(samplePlaces, routePath, radius) {
         const locationsWithinRadius = [];
 
+        console.log(samplePlaces);
+
         samplePlaces.forEach((place) => {
-            const { name, lat, long } = place;
+            const {
+                name,
+                lat,
+                long,
+                photo
+            } = place;
 
             for (let i = 0; i < routePath.length; i++) {
                 const routePoint = routePath[i];
@@ -118,19 +133,32 @@
 
                 if (distance <= radius) {
                     placesList.innerHTML += `
-                        <li>${name} | ${lat} | ${long} | ${distance.toFixed(2)} km</li>
-                    `;
+                        <div class="place-card" style="display: flex; align-items: center; margin: 10px 0; border: 1px solid #ddd; padding: 10px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                            <img src="storage/${photo}" alt="${name}" style="width: 100px; height: 100px; object-fit: cover; border-radius: 8px; margin-right: 15px;">
+                            <div class="place-details">
+                                <h3 style="margin: 0; font-size: 18px; font-weight: bold;">${name}</h3>
+                                <p style="margin: 5px 0; font-size: 14px; color: #555;">${distance.toFixed(2)} km away</p>
+                            </div>
+                        </div>                    `;
 
                     const pin = "{{ asset('images/pin.png') }}";
 
                     new google.maps.Marker({
                         map: map,
-                        position: { lat: lat, lng: long },
+                        position: {
+                            lat: lat,
+                            lng: long
+                        },
                         icon: pin,
                         title: name
                     });
 
-                    locationsWithinRadius.push({ name, lat, long, distance });
+                    locationsWithinRadius.push({
+                        name,
+                        lat,
+                        long,
+                        distance
+                    });
                     break;
                 }
             }
@@ -140,4 +168,5 @@
     }
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key={{ $apiKey }}&libraries=places&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ $apiKey }}&libraries=places&callback=initMap" async
+    defer></script>
