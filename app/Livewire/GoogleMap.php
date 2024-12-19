@@ -2,13 +2,13 @@
 
 namespace App\Livewire;
 
-use App\Models\Place; // Changed to Place model
+use App\Models\Place; 
 use Livewire\Component;
 
 class GoogleMap extends Component 
 {
     public $apiKey;
-    public $places; // Changed to places
+    public $places; 
 
     public function mount() 
     {
@@ -16,6 +16,7 @@ class GoogleMap extends Component
         // Get places from database
         $this->places = Place::all()->map(function($place) {
             return [
+                'photo' =>$place->photo,
                 'name' => $place->name,
                 'lat' => $place->latitude,
                 'long' => $place->longitude
