@@ -7,7 +7,7 @@
                     class="{{$type}}-carousel transition-all duration-300 ml-4 grid grid-flow-col auto-cols-[calc(100%_/_4_-_32px)] gap-8 py-4 sm:auto-cols-[calc(100%_/_1_-_32px)] lg:auto-cols-[calc(100%_/_3_-_32px)] md:auto-cols-[calc(100%_/_2_-_32px)]">
                     @foreach ($places as $place)
                         <div class="bg-white p-6 rounded shadow {{$type}}-card">
-                        <img src="{{ asset('storage/app/public/photos/' . $place->photo)}}" alt="{{ $place->name }}"
+                        <img src="{{ asset('storage/photos/' . $place->photo)}}" alt="{{ $place->name }}"
                                 class="rounded mb-2">
                             <h4 class="text-xl font-semibold">{{ $place->name }}</h4>
                             <p class="text-gray-600 truncate">{{ $place->description }}</p>

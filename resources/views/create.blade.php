@@ -34,11 +34,11 @@
         </div>
         <div class="mb-4">
             <label class="block text-gray-700">Latitude</label>
-            <input type="text" name="latitude" class="w-full border rounded p-2" required>
+            <input type="text" name="latitude" class="w-full border rounded p-2" >
         </div>
         <div class="mb-4">
             <label class="block text-gray-700">Longitude</label>
-            <input type="text" name="longitude" class="w-full border rounded p-2" required>
+            <input type="text" name="longitude" class="w-full border rounded p-2" >
         </div>
         <div class="mb-4">
             <label class="block text-gray-700">District</label>

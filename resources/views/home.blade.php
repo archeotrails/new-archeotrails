@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <!-- Hero Section with Slideshow -->
     <div class="relative w-full h-[600px] overflow-hidden">
         <div class="absolute inset-0">
@@ -44,6 +45,146 @@
             </div>
         </div>
 
+           
+    <!-- Search Form -->
+    <div class="mb-16">
+        <form action="{{ route('place.search') }}" method="GET" class="flex gap-4 max-w-2xl mx-auto">
+            <input type="text" 
+                name="search" 
+                placeholder="Search places..." 
+                class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none"
+            >
+            <button type="submit" 
+                    class="px-6 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors">
+                Search
+            </button>
+        </form>
+    </div>
+
+<!-- Search Results Section -->
+    
+    @if (session()->has('search_results') && count(session('search_results')) > 0)
+    <section class="mb-16">
+        <div class="flex items-center justify-between mb-8">
+            <h3 class="text-3xl font-bold text-gray-800">
+                @if(session('showing_suggestions'))
+                    Suggested Places
+                @elseif(session('no_exact_match'))
+                    Similar Places to "{{ session('search_query') }}"
+                @else
+                    Search Results
+                @endif
+            </h3>
+            <div class="h-px bg-gray-200 flex-grow mx-4"></div>
+            <a href="{{ route('clear.search') }}"
+               class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                Clear Search
+            </a>
+        </div>
+
+        @if(session('showing_suggestions'))
+            <div class="bg-amber-50 rounded-lg p-4 mb-6">
+                <p class="text-amber-800">
+                    No places found for "{{ session('search_query') }}". Here are some interesting places you might like to explore:
+                </p>
+            </div>
+        @elseif(session('no_exact_match'))
+            <p class="text-gray-600 mb-6">No exact matches found. Here are some similar places you might like:</p>
+        @endif
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach(session('search_results') as $place)
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300">
+                    <img src="{{ asset('storage/' . $place->photo) }}" 
+                         alt="{{ $place->name }}"
+                         class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h4 class="text-xl font-bold mb-2">{{ $place->name }}</h4>
+                        <div class="text-sm text-amber-600 mb-2">{{ $place->category }}</div>
+                        <p class="text-gray-600 mb-4">{{ Str::limit($place->description, 100) }}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-500">{{ $place->district }}</span>
+                            <a href="{{ route('places.show', $place) }}"
+                               class="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </section>
+@endif
+    <br>
+
+
+    @auth
+         <livewire:preference-popup />
+
+<!-- After your search results section -->
+    @if(session()->has('place_preference') && isset($preferredPlaces) && $preferredPlaces->count() > 0)
+        <section class="mb-16">
+            <!-- <div class="flex items-center justify-between mb-8">
+                <h3 class="text-3xl font-bold text-gray-800">Recommended For You According To Your Preference</h3>
+                <div class="h-px bg-gray-200 flex-grow mx-4"></div>
+                <form action="{{ route('clear.preference') }}" method="POST" class="inline">
+                @csrf
+                <button type="submit" 
+                        class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                    Clear Recommendations
+                </button>
+            </form>
+            </div> -->
+            
+        <script>
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('preferences-updated', (event) => {
+                const places = event.preferredPlaces;
+                const recommendedSection = document.getElementById('recommended-section');
+                
+                let html = `
+                    <section class="mb-16">
+                        <div class="flex items-center justify-between mb-8">
+                            <h3 class="text-3xl font-bold text-gray-800">Recommended For You</h3>
+                            <div class="h-px bg-gray-200 flex-grow mx-4"></div>
+                            <form action="{{ route('clear.preference') }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                                    Clear Recommendations
+                                </button>
+                            </form>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">`;
+
+                places.forEach(place => {
+                    html += `
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-1 transition-all duration-300">
+                            <img src="/storage/${place.photo}" alt="${place.name}" class="w-full h-48 object-cover">
+                            <div class="p-6">
+                                <h4 class="text-xl font-bold mb-2">${place.name}</h4>
+                                <div class="text-sm text-amber-600 mb-2">${place.category}</div>
+                                <p class="text-gray-600 mb-4">${place.description.substring(0, 100)}...</p>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-500">${place.district}</span>
+                                    <a href="/places/${place.id}" class="px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors">
+                                        View Details
+                                    </a>
+                                </div>
+                            </div>
+                        </div>`;
+                });
+
+                html += `</div></section>`;
+                recommendedSection.innerHTML = html;
+            });
+        });
+    </script>
+    @endauth
+        </section>
+    @endif
+
+    <br>
+   
         <!-- Sections -->
         <section id="explore" class="mb-16">
             <div class="flex items-center justify-between mb-8">

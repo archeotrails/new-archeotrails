@@ -12,7 +12,7 @@
         </div>
         <div class="p-3 bg-gray-50 rounded-lg shadow">
             <p class="text-sm text-gray-700">{{ $place->description }}</p>
-        </div>
+        </div> 
         
         <div class="space-y-3">
                         

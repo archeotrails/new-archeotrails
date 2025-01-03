@@ -7,11 +7,14 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <title>{{ config('app.name', 'Archeotrails') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpI_7kANJiDrSmnMkKlaioMk1DPZYu6y0&libraries=places"></script>
+    @livewireStyles
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 
 <body class="bg-gray-100">
-
+@livewireScripts
     <!-- Header with Navigation -->
     <header class="bg-green-700 text-white p-4">
         <div class="container mx-auto flex justify-between items-center">
@@ -29,6 +32,84 @@
                         class="text-lg font-semibold text-gray-100 hover:text-blue-200">Add Place</a>
                 </div>
             </nav>
+             <!-- language button -->
+
+<style>
+    .custom-translate {
+        position: relative;
+        display: inline-block;
+    }
+
+    .custom-translate select {
+        appearance: none;
+        background-color: transparent;
+        border: 1px solid #ddd;
+        padding: 8px 32px 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .custom-translate select:focus {
+        outline: none;
+        border-color: #4a8;
+    }
+
+    #google_translate_element {
+        display: none;
+    }
+    .goog-te-banner-frame {
+        display: none !important;
+    }
+    .goog-logo-link {
+        display: none !important;
+    }
+    .goog-te-gadget span {
+        display: none !important;
+    }
+</style>
+
+ <div class="custom-translate">
+    <select id="language-select" onchange="changeLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="si">Sinhala</option>
+        <option value="ta">Tamil</option>
+        <option value="es">Spanish</option>
+        <option value="fr">French</option>
+        <option value="it">Italian</option>
+        <option value="de">German</option>
+        <option value="ja">Japanese</option>
+        <option value="ko">Korean</option>
+        <option value="pt">Portuguese</option>
+        <option value="ru">Russian</option>
+        <option value="zh-CN">Chinese</option>
+    </select>
+</div>
+
+<div id="google_translate_element"></div> 
+
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'en,si,ta,es,fr,it,de,ja,ko,pt,ru,zh-CN',
+            layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+            autoDisplay: false,
+            multilanguagePage: true,
+        }, 'google_translate_element');
+    }
+
+    function changeLanguage(langCode) {
+        var select = document.querySelector('select.goog-te-combo');
+        if (select) {
+            select.value = langCode;
+            select.dispatchEvent(new Event('change'));
+        }
+    }
+</script>
+
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
             <!-- User Section -->
             <div class="relative">
                 @guest

@@ -75,3 +75,29 @@ Route::get('/locations', function () {
     return view('locations');
 });
 
+//search
+Route::get('/search', [PlaceController::class, 'search'])->name('place.search');
+Route::get('/clear-search', [PlaceController::class, 'clearSearch'])->name('clear.search');
+
+// personalized routes
+// Route::get('/nearby-places', [PlaceController::class, 'getNearbyPlaces']);
+
+// use App\Livewire\PreferencePopup;
+
+// Route::get('/', function () {
+//     return view('home', [
+//         'archeologicalPlaces' => Place::where('category', 'Archeological')->where('status', 'accepted')->get(),
+//         'historicalPlaces' => Place::where('category', 'Historical')->where('status', 'accepted')->get(),
+//         'urbanPlaces' => Place::where('category', 'Urban')->where('status', 'accepted')->get(),
+//     ]);
+// });
+
+
+
+
+// Preference routes
+// Route::post('/set-preference', [PreferenceController::class, 'setPreference'])->name('set.preference');
+Route::get('/preference', [HomeController::class, 'preference'])->name('home.preference');
+Route::post('/set-preference', [HomeController::class, 'setPreference'])->name('set.preference');
+Route::post('/clear-preference', [App\Http\Controllers\HomeController::class, 'clearPreference'])
+    ->name('clear.preference');
