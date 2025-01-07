@@ -8,7 +8,6 @@
     <title>{{ config('app.name', 'Archeotrails') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpI_7kANJiDrSmnMkKlaioMk1DPZYu6y0&libraries=places"></script>
     @livewireStyles
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
