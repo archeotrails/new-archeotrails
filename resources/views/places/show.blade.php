@@ -6,13 +6,13 @@
     
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
-            <img src="{{ asset('storage/app/public/photos/' . $place->photo) }}" 
+            <img src="{{ asset('storage/'.$place->photo)}}" 
                  alt="{{ $place->name }}" 
-                 class="rounded shadow-md w-full h-64 object-cover">
+                 class="rounded shadow-md w-full aspect-square object-cover">
         </div>
         <div class="p-3 bg-gray-50 rounded-lg shadow">
             <p class="text-sm text-gray-700">{{ $place->description }}</p>
-        </div>
+        </div> 
         
         <div class="space-y-3">
                         
