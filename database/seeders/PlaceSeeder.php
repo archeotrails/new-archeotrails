@@ -52,7 +52,7 @@ class PlaceSeeder extends Seeder
             'category' => 'Archeological',
             'location' => '43 km (27 mi) away from the ancient monastic city of Anuradhapura.',
             'district' => 'Anuradhapura',
-            'photo' => 'photos/Ritigala+Ruins-2.jpg',
+            'photo' => 'photos/Ritigala_Ruins-2.jpg',
             'suggested_by' => 2,
             'status' => 'accepted',
             'longitude' => 80.68539518052062,
